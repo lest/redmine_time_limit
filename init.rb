@@ -1,6 +1,7 @@
 require 'redmine'
 
 require 'dispatcher'
+require 'time_limit_tag_helper_patch'
 require 'time_limit_time_entry_patch'
 require 'time_limit_application_controller_patch'
 
