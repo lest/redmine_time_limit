@@ -17,9 +17,8 @@ module TimeLimitTimeEntryPatch
       validates_each :hours do |record, attr, value|
         if not value.nil? and record.new_record?
           if User.current.time_limit_begin
-            time_limit = (Time.now - Time.parse(User.current.time_limit_begin.to_s)) / 3600 -
+            time_limit = (Time.now - User.current.time_limit_begin.to_time) / 3600 -
               User.current.time_limit_hours
-            p time_limit
             record.errors.add attr, 'too much' if value > time_limit
           else
             record.errors.add attr, 'invalid'

@@ -6,7 +6,7 @@ module ActionView
       def content_tag_with_time_limit(name, content_or_options_with_block = nil, options = nil, escape = true, &block)
         result = content_tag_without_time_limit(name, content_or_options_with_block, options, escape, &block)
         if options and options[:id] and options[:id] == 'loggedas'
-          time_limit_total = (Time.now - Time.parse(User.current.time_limit_begin.to_s)) / 3600
+          time_limit_total = (Time.now - User.current.time_limit_begin.to_time) / 3600
           time_limit = time_limit_total - User.current.time_limit_hours
           result += <<-eos
 <div style="float: right; margin-right: 1em;">
