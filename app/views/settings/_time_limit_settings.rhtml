@@ -2,3 +2,16 @@
   <label>Remote IP match</label>
   <%= text_field_tag 'settings[remote_ip_match]', @settings['remote_ip_match'] %>
 </p>
+<% statuses = IssueStatus.find(:all, :order => 'position') %>
+<p>
+  <label>Start status</label>
+  <%= select_tag 'settings[status_start]', content_tag('option') + options_from_collection_for_select(statuses, 'id', 'name', @settings['status_start'].to_i) %>
+</p>
+<p>
+  <label>Stop status</label>
+  <%= select_tag 'settings[status_stop]', content_tag('option') + options_from_collection_for_select(statuses, 'id', 'name', @settings['status_stop'].to_i) %>
+</p>
+<p>
+  <label>Time statuses</label>
+  <%= select_tag 'settings[status_ids]', options_for_select(statuses.collect {|s| [s.name, s.id.to_s]}, @settings['status_ids']), :multiple => true %>
+</p>

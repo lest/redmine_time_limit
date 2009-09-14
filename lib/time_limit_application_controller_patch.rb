@@ -16,7 +16,7 @@ module Redmine
           def time_limit
             if User.current.logged?
               require 'date'
-              now = DateTime.now
+              now = Time.now
               today = Date.today
               update = false
               local = true
@@ -41,6 +41,9 @@ module Redmine
                   User.current.time_limit_hours = 99
                 end
                 User.current.save
+                
+                timers = Timer.find(:all, :conditions => ['user_id = ? AND start < ?', User.current.id, Date.today])
+                timers.each {|t| t.delete}
               end
             end
           end

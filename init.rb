@@ -2,19 +2,30 @@ require 'redmine'
 
 require 'dispatcher'
 require 'time_limit_tag_helper_patch'
+require 'time_limit_application_helper_patch'
 require 'time_limit_time_entry_patch'
+require 'time_limit_issue_patch'
 require 'time_limit_application_controller_patch'
 
 Dispatcher.to_prepare do
   TimeEntry.send(:include, TimeLimitTimeEntryPatch)
+  Issue.send(:include, TimeLimitIssuePatch)
   Redmine::MenuManager::MenuController.send(:include, Redmine::MenuManager::MenuController::TimeLimitApplicationControllerPatch)
 end
 
 Redmine::Plugin.register :redmine_time_limit do
-  name 'Redmine Time Limit plugin'
+  name 'Time Limit plugin'
   author 'Just Lest'
   description ''
-  version '0.0.1'
+  version '0.1.0'
   
-  settings :default => {'remote_ip_match' => '127.0.0.1'}, :partial => 'settings/time_limit_settings'
+  permission :timer_save, :timer => :save
+
+  settings :default => {'remote_ip_match' => '127.0.0.1',
+                        'status_start' => '',
+                        'status_stop' => '',
+                        'statuses' => nil},
+           :partial => 'settings/time_limit_settings'
 end
+
+ActiveRecord::Base.observers << :journal_time_limit_observer

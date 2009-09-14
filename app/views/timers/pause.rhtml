@@ -1,0 +1,4 @@
+<%= link_to_remote('Start',
+                   {:url => {:controller => 'timers', :action => 'start', :issue_id => @issue},
+                    :success => "$('timer-start-pause').replace(request.responseText)"},
+                   :id => 'timer-start-pause', :class => 'icon icon-time-add') %>
