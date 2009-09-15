@@ -51,7 +51,7 @@ module TimeLimitTimeEntryPatch
         if timer
           hours = timer.hours
           hours += (Time.now - timer.start).to_f / 3600 if timer.start
-          attrs[:hours] = hours.round(2) if hours > 0.01
+          attrs[:hours] = (hours * 100).floor / 100.0 if hours > 0.01
         end
       end
       initialize_without_time_limit(attrs) do

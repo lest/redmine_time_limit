@@ -27,12 +27,13 @@
        <%= link_to h(truncate(issue.subject, :length => 60)), :controller => 'issues', :action => 'show', :id => issue %> (<%=h issue.status %>)
        <% hours = timer.hours
           hours += (Time.now - timer.start).to_f / 3600 if timer.start %>
-      <td><%= hours.round(2) if hours > 0.01 %></td>
+      <td><%= (hours * 100).floor / 100.0 %></td>
      </td>
 		</tr>
 		<% end %>
 		</tbody>
 	</table>
+  <p class="small"><%= link_to 'Post issue timers', :controller => 'timers', :action => 'post' %></p>
 <% end %>
 <% else %>
 	<p class="nodata"><%= l(:label_no_data) %></p>
