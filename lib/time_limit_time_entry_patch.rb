@@ -40,7 +40,7 @@ module TimeLimitTimeEntryPatch
         timer.delete if timer
       end
       
-      alias_method_chain :initialize, :time_limit
+      alias_method_chain :initialize, :time_limit unless method_defined?(:initialize_with_time_limit)
     end
   end
 
