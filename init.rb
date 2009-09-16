@@ -17,7 +17,7 @@ Redmine::Plugin.register :redmine_time_limit do
   name 'Time Limit plugin'
   author 'Just Lest'
   description ''
-  version '0.2.0'
+  version '0.2.1'
   
   permission :timer_save, :timer => :save
 
