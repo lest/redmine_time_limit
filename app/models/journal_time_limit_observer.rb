@@ -1,4 +1,6 @@
 class JournalTimeLimitObserver < ActiveRecord::Observer
+  unloadable
+
   observe :journal
   
   def after_create(journal)

@@ -2,7 +2,6 @@ require 'redmine'
 
 require 'dispatcher'
 require 'time_limit_tag_helper_patch'
-require 'time_limit_application_helper_patch'
 require 'time_limit_time_entry_patch'
 require 'time_limit_issue_patch'
 require 'time_limit_application_controller_patch'
@@ -17,7 +16,7 @@ Redmine::Plugin.register :redmine_time_limit do
   name 'Time Limit plugin'
   author 'Just Lest'
   description ''
-  version '0.2.1'
+  version '0.2.2'
   
   permission :timer_save, :timer => :save
 
