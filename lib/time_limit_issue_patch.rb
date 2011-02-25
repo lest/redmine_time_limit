@@ -13,8 +13,9 @@ module TimeLimitIssuePatch
   module InstanceMethods
     def timer_start_allowed?
       status_ids = Setting.plugin_redmine_time_limit['status_ids'] || []
-      User.current.allowed_to?(:timer_save, self.project) || (self.assigned_to == User.current &&
-                                                              status_ids.include?(self.status_id_was.to_s))
+      User.current.allowed_to?(:timer_save, self.project) ||
+        ((self.assigned_to.nil? || self.assigned_to == User.current) &&
+         status_ids.include?(self.status_id_was.to_s))
     end
 
     def timer_save_allowed?

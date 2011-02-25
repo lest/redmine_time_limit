@@ -15,12 +15,12 @@ module ApplicationHelper
 
         if timer.nil? || timer.start.nil?
           if issue.timer_start_allowed?
-            html_options[:id] = 'timer-start-pause'
+            html_options[:class] += ' timer-start-pause'
             result += link_to_remote('Start',
                                      {:url => {:controller => 'timers',
                                                :action => 'start',
                                                :issue_id => options[:issue_id]},
-                                      :success => "$('timer-save').show(); $('timer-start-pause').replace(request.responseText)"},
+                                      :success => "$$('.timer-save').each(function (elem) { elem.show() }); $$('.timer-start-pause').each(function (elem) { elem.replace(request.responseText); });"},
                                      html_options) + ' '
           end
         else
@@ -28,17 +28,18 @@ module ApplicationHelper
         end
 
         if timer && timer.start
-          html_options[:id] = 'timer-start-pause'
+          html_options[:class] += ' timer-start-pause'
           result += link_to_remote('Pause',
                                    {:url => {:controller => 'timers',
                                              :action => 'pause',
                                              :issue_id => options[:issue_id]},
-                                    :success => "$('timer-save').show(); $('timer-start-pause').replace(request.responseText)"},
+                                    :success => "$$('.timer-save').each(function (elem) { elem.show() }); $$('.timer-start-pause').each(function (elem) { elem.replace(request.responseText); });"},
                                    html_options) + ' '
         end
 
         html_options[:style] = 'display: none' unless issue.timer_save_allowed?
-        html_options[:id] = 'timer-save'
+        html_options[:class].sub!(' timer-start-pause', '')
+        html_options[:class] += ' timer-save'
         result += link_to(name, options, html_options)
 
         result
